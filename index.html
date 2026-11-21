@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="The English wiki of Touhou: Heartbound, a fan-made block-building life sim and romance in Gensokyo: heroines, bestiary, items, races, crafting and a full guide to playing.">
+<meta property="og:title" content="Touhou: Heartbound Wiki">
+<meta property="og:description" content="The English wiki of Touhou: Heartbound, a fan-made block-building life sim and romance in Gensokyo: heroines, bestiary, items, races, crafting and a full guide to playing.">
+<meta property="og:image" content="img/title.png">
+<link rel="icon" href="img/icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Touhou: Heartbound Wiki</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=M+PLUS+1p:wght@400;500;700&display=swap">
+<style>
+/* Layout: the game's own UI as a wiki. A night-at-the-shrine page ground, a dark cedar side panel for navigation,
+   and every article on lacquer-framed parchment, the way the in-game windows are drawn. One committed look. */
+:root {
+  color-scheme: dark;
+  --night: #141a2a;
+  --night-2: #1b2238;
+  --slate: #26304a;
+  --slate-2: #3a4a6c;
+  --wood: #2e1912;
+  --wood-2: #45291b;
+  --wood-3: #5f3b26;
+  --paper: #e6d6b4;
+  --paper-hi: #f1e5cb;
+  --paper-lo: #d4bf98;
+  --ink: #26150e;
+  --ink-soft: #4a3324;
+  --red: #b5301d;
+  --red-hi: #d9462a;
+  --red-lo: #8a2115;
+  --gold: #e2b646;
+  --gold-lo: #a97f26;
+  --cream: #fbf1da;
+  --cream-soft: #d8c7a6;
+  --leaf: #3f7a3a;
+  --sky: #8ea3c4;
+  --font-display: "DotGothic16", "MS Gothic", ui-monospace, monospace;
+  --font-body: "M PLUS 1p", "Segoe UI", system-ui, sans-serif;
+}
+html { background: var(--night); }
+body { background: var(--night); color: var(--cream); font-family: var(--font-body); font-size: 15.5px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--wood); }
+.stars { position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .55;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, var(--cream) 50%, transparent 51%),
+    radial-gradient(1px 1px at 64% 9%, var(--cream) 50%, transparent 51%),
+    radial-gradient(1px 1px at 82% 31%, var(--sky) 50%, transparent 51%),
+    radial-gradient(1px 1px at 33% 42%, var(--sky) 50%, transparent 51%),
+    radial-gradient(2px 2px at 91% 72%, var(--cream) 50%, transparent 51%),
+    radial-gradient(1px 1px at 7% 77%, var(--cream) 50%, transparent 51%),
+    radial-gradient(1px 1px at 47% 88%, var(--sky) 50%, transparent 51%);
+  background-size: 420px 420px; }
+img { image-rendering: pixelated; }
+a { color: var(--red-lo); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--wood); border-bottom: 3px solid var(--gold-lo); box-shadow: 0 2px 0 var(--wood-3), 0 6px 18px rgba(0,0,0,.45); }
+.top-in { max-width: 1320px; margin: 0 auto; padding-block: 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; align-items: center; gap: 14px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cream); }
+.brand img { width: 128px; height: auto; display: block; }
+.brand span { font-family: var(--font-display); font-size: 1.05rem; color: var(--gold); letter-spacing: .04em; padding-left: 10px; border-left: 2px solid var(--wood-3); }
+.search { margin-left: auto; position: relative; flex: 0 1 300px; min-width: 0; }
+.search input { width: 100%; box-sizing: border-box; background: var(--wood-2); color: var(--cream); border: 2px solid var(--wood-3); border-bottom-color: var(--gold-lo); padding: 7px 10px 7px 32px; font: inherit; font-size: .92rem; }
+.search input::placeholder { color: var(--cream-soft); opacity: .8; }
+.search svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); }
+.menu-btn { display: none; background: var(--wood-2); border: 2px solid var(--wood-3); padding: 6px 10px; font-family: var(--font-display); color: var(--gold); }
+@media (max-width: 960px) { .menu-btn { display: block; } .brand span { display: none; } }
+@media (max-width: 520px) { .brand img { width: 96px; } }
+
+/* frame */
+.frame { position: relative; max-width: 1320px; margin: 0 auto; padding-block: 22px 60px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 960px) { .frame { grid-template-columns: minmax(0, 1fr); } }
+
+/* side nav */
+.side { position: sticky; top: 78px; background: var(--wood); border: 3px solid var(--wood-3); box-shadow: inset 0 0 0 2px var(--gold-lo), 0 8px 24px rgba(0,0,0,.4); padding: 14px 10px; max-height: calc(100vh - 100px); overflow-y: auto; }
+.side h3 { font-family: var(--font-display); font-weight: 400; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 14px 8px 6px; }
+.side h3:first-child { margin-top: 2px; }
+.side a { display: flex; align-items: center; gap: 8px; color: var(--cream); text-decoration: none; padding: 5px 8px; font-size: .93rem; border-left: 3px solid transparent; }
+.side a:hover { background: var(--wood-2); }
+.side a[aria-current="page"] { background: var(--red-lo); border-left-color: var(--gold); color: var(--cream); }
+.side .ico { width: 24px; height: 24px; display: inline-grid; place-items: center; flex: none; }
+@media (max-width: 960px) {
+  .side { position: fixed; z-index: 25; top: 0; bottom: 0; left: 0; width: min(290px, 84vw); max-height: none; padding-top: calc(env(safe-area-inset-top, 0px) + 14px); padding-left: max(10px, env(safe-area-inset-left, 0px)); transform: translateX(-105%); visibility: hidden; transition: transform .2s, visibility .2s; }
+  .side.open { transform: none; visibility: visible; }
+  .scrim { position: fixed; inset: 0; z-index: 24; background: rgba(8,10,20,.6); }
+}
+
+/* parchment panels */
+.panel { background: var(--paper); color: var(--ink); border: 3px solid var(--wood); box-shadow: inset 0 0 0 2px var(--gold-lo), inset 0 0 0 5px var(--paper-hi), 0 10px 28px rgba(0,0,0,.45); padding: 26px clamp(16px, 3vw, 34px) 30px; position: relative; }
+.panel + .panel { margin-top: 22px; }
+.panel::before, .panel::after { content: ""; position: absolute; width: 10px; height: 10px; background: var(--gold); box-shadow: inset -3px -3px 0 var(--gold-lo); top: -6px; }
+.panel::before { left: -6px; } .panel::after { right: -6px; }
+.crumbs { font-size: .8rem; color: var(--ink-soft); margin-bottom: 4px; letter-spacing: .02em; }
+h1, h2, h3 { text-wrap: balance; }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.15; margin: 0 0 6px; color: var(--ink); }
+h1 .jp, h2 .jp { color: var(--red); font-size: .55em; margin-left: 10px; vertical-align: middle; letter-spacing: .1em; }
+.lede { font-size: 1.04rem; color: var(--ink-soft); max-width: 72ch; margin: 0 0 6px; }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: 1.45rem; color: var(--ink); margin: 34px 0 12px; display: flex; align-items: center; gap: 10px; }
+h2::before { content: ""; width: 12px; height: 12px; background: var(--red); box-shadow: inset -3px -3px 0 var(--red-lo); flex: none; }
+h2::after { content: ""; flex: 1; height: 2px; background: repeating-linear-gradient(90deg, var(--gold-lo) 0 6px, transparent 6px 10px); }
+h3 { font-size: 1.05rem; margin: 22px 0 6px; color: var(--ink); }
+.panel p, .panel li { max-width: 74ch; }
+.panel ul { padding-left: 1.2em; margin: 0 0 12px; }
+.panel li { margin-bottom: 5px; }
+.panel li::marker { color: var(--red); }
+
+kbd { font-family: var(--font-display); font-size: .86em; background: var(--paper-hi); color: var(--ink); border: 1px solid var(--wood-3); border-bottom-width: 3px; padding: 0 6px; white-space: nowrap; }
+.tag { display: inline-block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; padding: 1px 7px; border: 1px solid currentColor; line-height: 1.5; white-space: nowrap; }
+.tag.red { color: var(--red); } .tag.green { color: var(--leaf); } .tag.gold { color: var(--gold-lo); } .tag.soft { color: var(--ink-soft); }
+.tag.fill { background: var(--red); color: var(--cream); border-color: var(--red-lo); }
+
+/* screenshots */
+.shot { margin: 16px 0 18px; }
+.shot .pic { border: 3px solid var(--wood); box-shadow: inset 0 0 0 2px var(--gold-lo); background: var(--wood); padding: 2px; }
+.shot img { display: block; width: 100%; height: auto; }
+.shot figcaption { font-size: .84rem; color: var(--ink-soft); margin-top: 6px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 14px; }
+.gallery .shot { margin: 0; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; align-items: start; }
+
+/* tables */
+.tbl { overflow-x: auto; margin: 10px 0 18px; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; min-width: 460px; }
+th, td { text-align: left; padding: 7px 10px; vertical-align: top; border-bottom: 1px solid var(--paper-lo); }
+thead th { background: var(--wood); color: var(--cream); font-weight: 500; position: sticky; top: 0; }
+tbody tr:nth-child(even) td { background: rgba(255,255,255,.22); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* sprites */
+.spr { display: inline-block; background-repeat: no-repeat; image-rendering: pixelated; vertical-align: middle; flex: none; }
+.sprbox { display: grid; place-items: center; background: var(--paper-hi); border: 2px solid var(--paper-lo); }
+
+/* hero */
+.hero { position: relative; border: 3px solid var(--wood); box-shadow: inset 0 0 0 2px var(--gold-lo), 0 12px 32px rgba(0,0,0,.5); background: var(--wood); }
+.hero > img { display: block; width: 100%; height: auto; aspect-ratio: 640 / 290; object-fit: cover; object-position: 50% 0; }
+.hero .over { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 4%; text-align: center; pointer-events: none; }
+.hero .over img { width: min(58%, 640px); height: auto; filter: drop-shadow(0 3px 0 rgba(20,10,8,.55)); }
+.hero .tagline { font-family: var(--font-display); color: var(--cream); font-size: clamp(.8rem, 2vw, 1.15rem); text-shadow: 0 2px 0 var(--wood), 0 0 10px var(--wood); margin-top: 4px; letter-spacing: .04em; }
+.hero-band { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); background: var(--wood); border: 3px solid var(--wood); border-top: 0; box-shadow: inset 0 0 0 2px var(--gold-lo); }
+.hero-band div { padding: 10px 8px; text-align: center; border-right: 1px solid var(--wood-3); }
+.hero-band div:last-child { border-right: 0; }
+.hero-band b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; color: var(--gold); font-variant-numeric: tabular-nums; line-height: 1.2; }
+.hero-band span { font-size: .78rem; color: var(--cream-soft); }
+@media (max-width: 640px) { .hero-band { grid-template-columns: repeat(3, minmax(0, 1fr)); } .hero-band div:nth-child(3) { border-right: 0; } .hero-band div:nth-child(-n+3) { border-bottom: 1px solid var(--wood-3); } }
+
+/* portals */
+.portals { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 12px; margin-top: 8px; }
+.portal { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px; text-decoration: none; color: var(--ink); background: var(--paper-hi); border: 2px solid var(--paper-lo); border-bottom-width: 4px; transition: transform .12s, border-color .12s; }
+.portal:hover { border-color: var(--red); transform: translateY(-2px); }
+.portal .sprbox { width: 64px; height: 64px; background: var(--paper); }
+.portal b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; }
+.portal small { color: var(--ink-soft); font-size: .8rem; line-height: 1.35; display: block; }
+
+.dyk { background: var(--wood); color: var(--cream); padding: 14px 18px; border: 3px solid var(--wood-3); box-shadow: inset 0 0 0 2px var(--gold-lo); }
+.dyk h3 { font-family: var(--font-display); font-weight: 400; color: var(--gold); margin: 0 0 6px; }
+.dyk ul { margin: 0; }
+.dyk li::marker { color: var(--gold); }
+
+.strip { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+.strip .shot { flex: 0 0 min(78%, 320px); margin: 0; scroll-snap-align: start; }
+
+/* filter chips */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.chip { background: var(--paper-hi); border: 2px solid var(--paper-lo); padding: 3px 10px; font-size: .84rem; color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--red); border-color: var(--red-lo); color: var(--cream); }
+.chip .n { opacity: .7; font-variant-numeric: tabular-nums; margin-left: 4px; }
+.find { background: var(--paper-hi); border: 2px solid var(--paper-lo); padding: 6px 10px; font: inherit; font-size: .9rem; color: var(--ink); width: min(100%, 320px); box-sizing: border-box; }
+.count { font-size: .82rem; color: var(--ink-soft); margin: -4px 0 10px; }
+
+/* cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 12px; }
+.card { background: var(--paper-hi); border: 2px solid var(--paper-lo); border-bottom-width: 4px; padding: 12px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card .head { display: flex; gap: 12px; align-items: center; }
+.card .head .sprbox { width: 84px; height: 84px; flex: none; background: radial-gradient(circle at 50% 70%, var(--paper) 0 55%, var(--paper-hi) 56%); }
+.card .head b { font-family: var(--font-display); font-weight: 400; font-size: 1.08rem; display: block; line-height: 1.25; }
+.card .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.card p { margin: 0; font-size: .88rem; }
+.card .meta { font-size: .8rem; color: var(--ink-soft); border-top: 1px dashed var(--paper-lo); padding-top: 6px; }
+
+/* items */
+.itemgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 6px; }
+.itemgrid button { aspect-ratio: 1; background: var(--paper-hi); border: 2px solid var(--paper-lo); display: grid; place-items: center; padding: 0; }
+.itemgrid button:hover, .itemgrid button[aria-pressed="true"] { border-color: var(--red); background: var(--paper); }
+.itemcard { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center; background: var(--wood); color: var(--cream); padding: 14px; border: 3px solid var(--wood-3); box-shadow: inset 0 0 0 2px var(--gold-lo); margin-bottom: 14px; min-height: 96px; }
+.itemcard .sprbox { width: 96px; height: 96px; background: var(--wood-2); border-color: var(--wood-3); }
+.itemcard b { font-family: var(--font-display); font-weight: 400; font-size: 1.3rem; color: var(--gold); display: block; }
+.itemcard p { margin: 4px 0 0; color: var(--cream-soft); font-size: .92rem; }
+.itemcard .tag { color: var(--cream-soft); }
+
+/* steps */
+.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: grid; gap: 14px; }
+.steps > li { counter-increment: s; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; max-width: none; }
+.steps > li::before { content: counter(s); width: 40px; height: 40px; display: grid; place-items: center; font-family: var(--font-display); font-size: 1.2rem; background: var(--red); color: var(--cream); box-shadow: inset -3px -3px 0 var(--red-lo); }
+.steps b { display: block; font-size: 1.02rem; }
+.steps p { margin: 2px 0 0; }
+
+/* stage (cast) */
+.stage { background: linear-gradient(var(--night-2), var(--slate)); border: 3px solid var(--wood); box-shadow: inset 0 0 0 2px var(--gold-lo); padding: 26px 16px 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 6px 22px; position: relative; overflow: hidden; }
+.stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18px; background: repeating-linear-gradient(90deg, var(--wood-2) 0 30px, var(--wood-3) 30px 32px); border-top: 3px solid var(--gold-lo); }
+.stage figure { margin: 0; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; padding-bottom: 24px; }
+.stage figcaption { font-size: .72rem; color: var(--cream-soft); margin-top: 6px; text-align: center; max-width: 110px; }
+
+.grade { color: var(--red); letter-spacing: 1px; font-size: .9rem; }
+.forms { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: .82rem; }
+.forms span { background: var(--paper); padding: 0 6px; border: 1px solid var(--paper-lo); }
+.forms i { color: var(--gold-lo); font-style: normal; }
+
+.note { background: var(--paper-hi); border-left: 4px solid var(--gold-lo); padding: 10px 14px; margin: 12px 0 16px; font-size: .93rem; max-width: 74ch; }
+.note.warn { border-left-color: var(--red); }
+.note b { color: var(--red); font-family: var(--font-display); font-weight: 400; margin-right: 6px; }
+
+.toggle { display: inline-flex; border: 2px solid var(--wood); margin: 0 0 12px; }
+.toggle button { background: var(--paper-hi); border: 0; padding: 4px 12px; font-size: .84rem; color: var(--ink); }
+.toggle button[aria-pressed="true"] { background: var(--wood); color: var(--gold); }
+
+.results a { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--paper-lo); }
+.results a:hover { background: var(--paper-hi); }
+.results .sprbox { width: 52px; height: 52px; }
+
+.foot { margin-top: 22px; color: var(--cream-soft); font-size: .8rem; text-align: center; }
+.foot p { margin: 4px 0; }
+.loading { color: var(--ink-soft); font-family: var(--font-display); }
+.decor { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; margin: 18px 0 -6px; }
+.decor img { display: block; height: auto; }
+
+/* heroine pages */
+.profile { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 26px; align-items: start; }
+@media (max-width: 1100px) { .profile { grid-template-columns: minmax(0, 1fr); } .infobox { order: -1; max-width: 420px; } }
+.infobox { background: var(--paper-hi); border: 3px solid var(--wood); box-shadow: inset 0 0 0 2px var(--gold-lo); font-size: .88rem; }
+.infobox h4 { margin: 0; padding: 9px 12px; background: var(--red); color: var(--cream); font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; text-align: center; box-shadow: inset 0 -3px 0 var(--red-lo); }
+.infobox .por { display: grid; place-items: center; padding: 12px; background: linear-gradient(var(--paper), var(--paper-lo)); border-bottom: 2px solid var(--paper-lo); }
+.infobox dl { margin: 0; display: grid; grid-template-columns: 6.6em minmax(0, 1fr); }
+.infobox dt, .infobox dd { margin: 0; padding: 6px 10px; border-bottom: 1px solid var(--paper-lo); }
+.infobox dt { font-weight: 700; color: var(--ink-soft); }
+.banner { position: relative; border: 3px solid var(--wood); box-shadow: inset 0 0 0 2px var(--gold-lo); margin: 4px 0 18px; background: var(--wood); }
+.banner img { display: block; width: 100%; height: auto; }
+.banner .name { position: absolute; left: 0; bottom: 0; right: 0; padding: 26px 18px 12px; background: linear-gradient(transparent, rgba(27,14,10,.85)); color: var(--cream); }
+.banner .name b { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.4rem, 3.4vw, 2.2rem); display: block; text-shadow: 0 2px 0 var(--wood); }
+.banner .name span { font-size: .9rem; color: var(--cream-soft); }
+.faces { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
+.faces figure { margin: 0; text-align: center; }
+.faces .sprbox { aspect-ratio: 1; background: var(--paper-lo); border-color: var(--wood-3); }
+.faces figcaption { font-size: .8rem; margin-top: 4px; color: var(--ink-soft); }
+.poses { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; background: linear-gradient(var(--night-2), var(--slate)); border: 3px solid var(--wood); box-shadow: inset 0 0 0 2px var(--gold-lo); padding: 18px 12px 12px; }
+.poses figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
+.poses figcaption { font-size: .72rem; color: var(--cream-soft); margin-top: 6px; max-width: 120px; text-align: center; }
+.likes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; }
+.likes > div { background: var(--paper-hi); border: 2px solid var(--paper-lo); padding: 10px 14px; }
+.likes h3 { margin: 0 0 6px; font-family: var(--font-display); font-weight: 400; }
+.likes ul { margin: 0; }
+.clock td:first-child { white-space: nowrap; font-family: var(--font-display); color: var(--red); }
+.path { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+.path li { position: relative; padding: 0 0 18px 40px; margin: 0; max-width: none; }
+.path li::before { content: ""; position: absolute; left: 9px; top: 6px; width: 14px; height: 14px; background: var(--red); box-shadow: inset -3px -3px 0 var(--red-lo), 0 0 0 3px var(--paper); transform: rotate(45deg); }
+.path li::after { content: ""; position: absolute; left: 15px; top: 24px; bottom: 0; width: 2px; background: repeating-linear-gradient(var(--gold-lo) 0 4px, transparent 4px 7px); }
+.path li:last-child::after { display: none; }
+.path li.secret::before { background: var(--gold); box-shadow: inset -3px -3px 0 var(--gold-lo), 0 0 0 3px var(--paper); }
+.path b { font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; }
+.path p { margin: 2px 0 0; font-size: .92rem; }
+.quote { font-family: var(--font-display); color: var(--red-lo); }
+.heroine-card { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 18px; align-items: center; background: var(--paper-hi); border: 2px solid var(--paper-lo); border-bottom-width: 4px; padding: 14px; text-decoration: none; color: var(--ink); }
+.heroine-card:hover { border-color: var(--red); }
+.heroine-card .sprbox { width: 150px; height: 150px; background: var(--paper-lo); }
+.heroine-card b { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; display: block; }
+@media (max-width: 520px) { .heroine-card { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; } }
+.soon { color: var(--ink-soft); }
+li.planned { color: var(--ink-soft); }
+@media (prefers-reduced-motion: reduce) { .side, .portal { transition: none; } }
+</style>
+
+</head>
+<body>
+<div class="stars" aria-hidden="true"></div>
+<header class="top">
+  <div class="top-in">
+    <button class="menu-btn" id="menuBtn" aria-controls="side" aria-expanded="false">Menu</button>
+    <a class="brand" href="#home"><img src="img/logo.png" width="320" height="96" alt="Touhou: Heartbound"><span>Wiki</span></a>
+    <label class="search" for="q">
+      <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true"><rect x="2" y="2" width="7" height="2" fill="#e2b646"/><rect x="2" y="7" width="7" height="2" fill="#e2b646"/><rect x="1" y="3" width="2" height="5" fill="#e2b646"/><rect x="8" y="3" width="2" height="5" fill="#e2b646"/><rect x="9" y="9" width="2" height="2" fill="#e2b646"/><rect x="11" y="11" width="2" height="2" fill="#e2b646"/></svg>
+      <input id="q" type="search" placeholder="Search creatures, items, races…" autocomplete="off" aria-label="Search the wiki">
+    </label>
+  </div>
+</header>
+
+<div class="frame">
+  <nav class="side" id="side" aria-label="Wiki pages"></nav>
+  <main id="main"><div class="panel"><p class="loading">Opening the scrolls…</p></div></main>
+</div>
+
+<script>
+(function () {
+  var D = null;
+  var main = document.getElementById("main");
+  var side = document.getElementById("side");
+  var state = { search: "", bestiary: "All", items: "All", races: "All", recipes: "All", biomes: "All", biomeAlt: false, itemSel: null, recipeFind: "", beastFind: "", itemFind: "" };
+
+  var PAGES = [
+    { group: "The Game", items: [["home", "Home"], ["start", "Getting Started"], ["controls", "Controls"]] },
+    { group: "Heroines", items: [["heroines", "All Heroines"], ["shrine-maiden", "The Shrine Maiden"]] },
+    { group: "World", items: [["gensokyo", "Gensokyo"], ["biomes", "Biomes"], ["seasons", "Seasons & Sky"]] },
+    { group: "People", items: [["characters", "Characters"], ["daily-life", "Daily Life"], ["races", "Races"]] },
+    { group: "Compendium", items: [["bestiary", "Bestiary"], ["items", "Items"], ["crafting", "Crafting"]] },
+    { group: "Mechanics", items: [["mining", "Mining & Building"], ["skills", "Skills"], ["combat", "Combat"]] },
+    { group: "Wiki", items: [["about", "About the Game"]] }
+  ];
+  var TITLES = {}; PAGES.forEach(function (g) { g.items.forEach(function (p) { TITLES[p[0]] = [p[1], g.group]; }); });
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  // keys column: every token is a key
+  function keys(s) {
+    return esc(s).replace(/\b(Shift|Ctrl|Space|Enter|Esc|Tab)\b/g, "<kbd>$1</kbd>")
+      .replace(/(^|[\s(\/])([A-Z]|[1-8]-[1-8]|\+|-|=)(?=$|[\s,)\/.])/g, function (m, a, k) { return a + "<kbd>" + k + "</kbd>"; });
+  }
+  // prose: only clear key mentions become keycaps
+  function kbdify(s) {
+    var K = function (k) { return "<kbd>" + k + "</kbd>"; };
+    return esc(s)
+      .replace(/\b(Shift|Ctrl|Space|Enter|Esc)\b/g, function (m) { return K(m); })
+      .replace(/\(([A-Z]|[1-8])\)/g, function (m, k) { return "(" + K(k) + ")"; })
+      .replace(/\b([Pp]ress|[Hh]old|[Tt]ap|[Dd]ouble-tap|[Uu]se|with) ([A-Z]|[1-8]-[1-8])(?=[\s,.;)]|$)/g, function (m, v, k) { return v + " " + K(k); })
+      .replace(/\b([A-Z]) (or|\/) ([A-Z])\b/g, function (m, a, o, b) { return K(a) + " " + o + " " + K(b); })
+      .replace(/\b([WASD]) \+ (attack)/g, function (m, k, w) { return K(k) + " + " + w; })
+      .replace(/ ([+=]) \/ - /g, function (m, a) { return " " + K(a) + " / " + K("-") + " "; });
+  }
+
+  // sprite from an atlas, scaled by whole pixels to fit a box
+  function spr(atlas, r, box, maxScale) {
+    if (!r) return "";
+    var A = D.atlases[atlas];
+    var big = Math.max(r[2], r[3]);
+    var s = big > box ? box / big : Math.max(1, Math.min(maxScale || 6, Math.floor(box / big)));
+    return '<span class="spr" aria-hidden="true" style="width:' + r[2] * s + 'px;height:' + r[3] * s + 'px;background-image:url(' + A.src + ');background-size:' + A.w * s + 'px ' + A.h * s + 'px;background-position:-' + r[0] * s + 'px -' + r[1] * s + 'px"></span>';
+  }
+  function find(list, id) { for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; return null; }
+  function sp(list, atlas, id, box, max) { var x = find(D[list], id); return x ? spr(atlas, x.s, box, max) : ""; }
+  function shot(key, cap) {
+    var S = D.shots[key]; if (!S) return "";
+    return '<figure class="shot"><div class="pic"><img src="' + S.src + '" width="' + S.w + '" height="' + S.h + '" alt="' + esc(cap || S.caption) + '" loading="lazy"></div><figcaption>' + esc(cap || S.caption) + "</figcaption></figure>";
+  }
+  function list(arr) { return "<ul>" + arr.map(function (x) { return "<li>" + kbdify(x) + "</li>"; }).join("") + "</ul>"; }
+  function head(id, jp, lede) {
+    var t = TITLES[id];
+    return '<div class="crumbs">Heartbound Wiki › ' + esc(t[1]) + '</div><h1>' + esc(t[0]) + (jp ? '<span class="jp">' + jp + "</span>" : "") + "</h1>" + (lede ? '<p class="lede">' + lede + "</p>" : "");
+  }
+  function chips(name, values, counts) {
+    return '<div class="chips" role="group" aria-label="Filter">' + values.map(function (v) {
+      return '<button class="chip" data-chip="' + name + '" data-v="' + esc(v) + '" aria-pressed="' + (state[name] === v) + '">' + esc(v) + (counts ? '<span class="n">' + counts[v] + "</span>" : "") + "</button>";
+    }).join("") + "</div>";
+  }
+  function countBy(arr, f) { var c = { All: arr.length }; arr.forEach(function (x) { var k = f(x); c[k] = (c[k] || 0) + 1; }); return c; }
+  function cap(s) { s = String(s || ""); return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  // ---------- navigation ----------
+  var ICONS = {
+    home: ["creatures", "kitsunebi"], heroines: ["portraits", "p1"], "shrine-maiden": ["cast", "shrine_maiden"], start: ["items", "stone_pickaxe"], controls: ["items", "torch"],
+    gensokyo: ["races", "human"], biomes: ["creatures", "deer"], seasons: ["creatures", "fairy_spring"],
+    characters: ["cast", "outsider_f"], "daily-life": ["creatures", "koi"], races: ["races", "vampire"],
+    bestiary: ["creatures", "fairy"], items: ["items", "cedar_chest"], crafting: ["items", "carpenter_table"],
+    mining: ["items", "copper_pickaxe"], skills: ["races", "hermit"], combat: ["weapons", "bamboo_spear"], about: ["creatures", "kitsunebi"]
+  };
+  function navIcon(id) {
+    var ic = ICONS[id]; if (!ic) return "";
+    if (ic[0] === "portraits") return spr("portraits", D.heroine.portraits[1].s, 22, 2);
+    var listName = { cast: "cast", items: "items", races: "races", creatures: "creatures", stations: "stations", weapons: "weapons" }[ic[0]];
+    var x = find(D[listName], ic[1]);
+    if (!x) x = D[listName][0];
+    return spr(ic[0], x.s, 22, 2);
+  }
+  function renderNav(cur) {
+    side.innerHTML = PAGES.map(function (g) {
+      return "<h3>" + esc(g.group) + "</h3>" + g.items.map(function (p) {
+        return '<a href="#' + p[0] + '"' + (p[0] === cur ? ' aria-current="page"' : "") + '><span class="ico">' + navIcon(p[0]) + "</span>" + esc(p[1]) + "</a>";
+      }).join("");
+    }).join("");
+  }
+
+  // ---------- pages ----------
+  var R = {};
+
+  R.home = function () {
+    var biomes = D.world.biomes;
+    var picks = ["open_fields", "magic_forest", "lost_bamboo", "autumn_foothills", "sanzu_river", "sun_garden", "misty_shore", "liminal_road"];
+    var strip = picks.map(function (id) { var b = find(biomes, id); return b ? shot("b_" + id, b.name) : ""; }).join("");
+    if (!strip.trim()) strip = biomes.slice(0, 8).map(function (b) { return shot("b_" + b.id, b.name); }).join("");
+    var hostile = D.creatures.filter(function (c) { return c.hostile; }).length;
+    var portals = [
+      ["shrine-maiden", "The Shrine Maiden", "Keeper of the shrine, and the first heroine of Gensokyo.", ["cast", "shrine_maiden"]],
+      ["start", "Getting Started", "Your first day: from the torii to the Shrine Maiden.", ["items", "stone_pickaxe"]],
+      ["bestiary", "Bestiary", D.creatures.length + " creatures of fields, forests and the beyond.", ["creatures", "fairy"]],
+      ["races", "Races", D.races.length + " races to become, once per life.", ["races", "vampire"]],
+      ["items", "Items", D.items.length + " tools, weapons, materials and furniture.", ["items", "cedar_chest"]],
+      ["crafting", "Crafting", D.recipes.length + " recipes across the workbenches.", ["stations", "carpenter_table"]],
+      ["biomes", "Biomes", D.world.biomes.length + " landscapes, every one in four seasons.", ["creatures", "deer"]],
+      ["characters", "Characters", "The cast of looks, and creating your own character.", ["cast", "outsider_f"]],
+      ["combat", "Combat", "Combo chains, rolls, parries and permadeath.", ["weapons", "bamboo_spear"]]
+    ];
+    function portal(p) {
+      var listName = p[3][0] === "cast" ? "cast" : p[3][0];
+      var x = find(D[listName], p[3][1]) || D[listName][0];
+      return '<a class="portal" href="#' + p[0] + '"><span class="sprbox">' + spr(p[3][0], x.s, 56, 4) + "</span><span><b>" + esc(p[1]) + "</b><small>" + esc(p[2]) + "</small></span></a>";
+    }
+    return '<div class="hero"><img src="' + D.shots.title.src + '" width="640" height="360" alt="Gensokyo at dusk: a cherry tree, the Human Village, the Mansion of the Lake and a torii before a snowy mountain."><div class="over"><img src="' + D.shots.logo.src + '" width="320" height="96" alt="Touhou: Heartbound"><div class="tagline">A fan-made romance in Gensokyo</div></div></div>' +
+      '<div class="hero-band"><div><b>' + D.creatures.length + '</b><span>creatures</span></div><div><b>' + D.races.length + '</b><span>races</span></div><div><b>' + D.items.length + '</b><span>items</span></div><div><b>' + D.world.biomes.length + '</b><span>biomes</span></div><div><b>' + D.recipes.length + '</b><span>recipes</span></div><div><b>120</b><span>days a year</span></div></div>' +
+      '<div class="panel" style="margin-top:22px">' +
+      '<div class="crumbs">Heartbound Wiki</div><h1>Welcome to the Heartbound Wiki<span class="jp">幻想郷へようこそ</span></h1>' +
+      '<p class="lede"><b>Touhou: Heartbound</b> is a block-building life sim and romance set in Gensokyo, the hidden land of <i>Touhou Project</i>. You are an outsider who crosses the torii of the Hakurei Shrine and wakes up in a world of youkai, fairies and gods. Dig and build, cook and craft, explore and fight, and above all make bonds with the people who live there. What you do decides what you become.</p>' +
+      "<h2>Start exploring</h2><div class=\"portals\">" + portals.map(portal).join("") + "</div>" +
+      '<h2>Landscapes of Gensokyo</h2><div class="strip">' + strip + "</div>" +
+      '<div class="two" style="margin-top:22px"><div class="dyk"><h3>Did you know?</h3><ul>' +
+      "<li>A day lasts 24 real minutes, and the year has four months of 30 days: spring, summer, autumn and winter.</li>" +
+      "<li>Every field you visit is generated for your save and kept forever, exactly as you left it.</li>" +
+      "<li>You can change race only once in a life. The Book of Races (<kbd>Y</kbd>) shows what each one asks of you.</li>" +
+      "<li>Apart from the youkai and fairies that ambush travellers, only " + hostile + " of the " + D.creatures.length + " creatures will start a fight. Most of Gensokyo simply lives its life around you.</li>" +
+      "<li>Death is permanent: a fallen save becomes a memorial with a tombstone that tells your story.</li></ul></div>" +
+      '<div>' + shot("season_card", "Autumn arrives at the foot of the shrine stairway.") + "</div></div>" +
+      '<div class="decor" aria-hidden="true"><img src="' + D.shots.sakura.src + '" width="238" height="185" style="width:min(30%,238px)" alt=""><img src="' + D.shots.torii.src + '" width="128" height="112" style="width:min(22%,192px)" alt=""><img src="' + D.shots.facade.src + '" width="256" height="168" style="width:min(36%,256px)" alt=""></div>' +
+      "</div>";
+  };
+
+
+  // ---------- heroines ----------
+  function hlist(arr) {
+    return "<ul>" + arr.map(function (x) {
+      var planned = /^Planned:/.test(x);
+      return "<li" + (planned ? ' class="planned"' : "") + ">" + (planned ? '<span class="tag soft">coming</span> ' + kbdify(x.replace(/^Planned:\s*/, "")) : kbdify(x)) + "</li>";
+    }).join("") + "</ul>";
+  }
+  function quotes(s) { return s.replace(/'([^']{3,}?)'(?=[\s,.;:)]|$)/g, '<span class="quote">“$1”</span>'); }
+  function qlist(arr) { return hlist(arr).replace(/<li([^>]*)>([\s\S]*?)<\/li>/g, function (m, a, t) { return "<li" + a + ">" + quotes(t) + "</li>"; }); }
+
+  R.heroines = function () {
+    var H = D.heroine;
+    return '<div class="panel">' + head("heroines", "ヒロイン", "The heroines are the people of Gensokyo you can grow close to. Each has her own home, routine, tastes, memory and story, and a bond that can become friendship or, if you both want it, romance.") +
+      '<h2>Living in Gensokyo</h2><a class="heroine-card" href="#shrine-maiden"><span class="sprbox">' + spr("portraits", H.portraits[2].s, 140, 2) + '</span><span><b>The Shrine Maiden</b><span class="tag gold">Hakurei Shrine</span> <span class="tag green">Lives in the world</span><p style="margin:8px 0 0">' + esc(H.intro) + "</p></span></a>" +
+      '<h2>How bonds work</h2><p>Every heroine reads three bars, from 0 to 100: <b>Favor</b>, her general good will; <b>Trust</b>, built by coming back and keeping your word; and <b>Intimacy</b>, the comfort of time spent together. Milestones unlock new talks, gestures, invitations and help, and they are never lost.</p>' +
+      '<p>Friendship and romance are separate paths. Romance only begins if you choose to show interest, and you can step back to friendship at any time without penalty.</p>' +
+      '<h2>More heroines</h2><p class="soon">More heroines will make their homes in Gensokyo as the world grows. Each will get her own page here.</p></div>';
+  };
+
+  R["shrine-maiden"] = function () {
+    var H = D.heroine, S = H.shots;
+    var hero = D.shots.sm_hero;
+    var box = '<aside class="infobox" aria-label="Profile"><h4>The Shrine Maiden</h4><div class="por">' + spr("portraits", H.portraits[2].s, 200, 2) + "</div><dl>" +
+      [["Role", "Keeper of the Hakurei Shrine"], ["Home", "Hakurei Shrine, her room off the east corridor"], ["Race", "Human"], ["Walk", "Relaxed"], ["Rest pose", "Laid back"], ["Hair", "Long, shrine brown, with a huge red bow"], ["Eyes", "Oxblood red"], ["Likes", "Tea, sweets, quiet sunny days"], ["Dislikes", "Incidents, rain on the laundry"], ["Status", "Lives in the world"]]
+        .map(function (r) { return "<dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("") + "</dl></aside>";
+    var faces = '<div class="faces">' + H.portraits.map(function (p) { return '<figure><div class="sprbox">' + spr("portraits", p.s, 120, 1) + "</div><figcaption>" + esc(p.name) + "</figcaption></figure>"; }).join("") + "</div>";
+    var poses = '<div class="poses">' + H.poses.map(function (p) { return "<figure>" + spr("poses", p.s, 130, 1) + "<figcaption>" + esc(p.name) + "</figcaption></figure>"; }).join("") + "</div>";
+    var clock = '<div class="tbl clock"><table><thead><tr><th>When</th><th>What she does</th></tr></thead><tbody>' + H.schedule.map(function (r) { return "<tr><td>" + esc(r.time) + "</td><td>" + esc(r.activity) + "</td></tr>"; }).join("") + "</tbody></table></div>";
+    var path = '<ol class="path">' + H.milestones.map(function (m) { return "<li" + (/^True Love/.test(m.name) ? ' class="secret"' : "") + "><b>" + esc(m.name) + "</b><p>" + quotes(esc(m.unlocks)) + "</p></li>"; }).join("") + "</ol>";
+    var together = '<div class="cards">' + H.together.map(function (t) {
+      var planned = /\(planned\)/.test(t.name);
+      return '<div class="card"><b style="font-family:var(--font-display);font-weight:400;font-size:1.05rem">' + esc(t.name.replace(/\s*\(planned\)/, "")) + "</b>" + (planned ? '<div class="tags"><span class="tag soft">coming</span></div>' : "") + "<p>" + quotes(esc(t.text)) + "</p></div>";
+    }).join("") + "</div>";
+    function gal(keys) { return '<div class="gallery">' + keys.map(function (k) { return shot(k); }).join("") + "</div>"; }
+    return '<div class="panel">' + head("shrine-maiden", "巫女", "") +
+      '<div class="banner"><img src="' + hero.src + '" width="' + hero.w + '" height="' + hero.h + '" alt="' + esc(hero.caption) + '"><div class="name"><b>The Shrine Maiden</b><span>Keeper of the shrine at the top of the long stone steps</span></div></div>' +
+      '<div class="profile"><div>' +
+      '<p class="lede">' + esc(H.intro) + "</p>" +
+      "<h2>Appearance</h2>" + hlist(H.appearance) +
+      "<h2>Personality</h2>" + qlist(H.personality) +
+      '<h2>Likes and dislikes</h2><div class="likes"><div><h3>Likes</h3><ul>' + H.likes.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul></div><div><h3>Dislikes</h3><ul>' + H.dislikes.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div></div>" +
+      "</div>" + box + "</div>" +
+      "<h2>Expressions</h2><p>Her portrait follows her mood in every conversation.</p>" + faces +
+      "<h2>Poses</h2>" + poses +
+      "<h2>A day in her life</h2>" + gal(S.scenes.slice(0, 6)) + clock + hlist(H.schedule_notes) +
+      "<h2>Meeting her</h2>" + qlist(H.meeting) +
+      "<h2>Your bond</h2>" + qlist(H.relationship) +
+      "<h3>Milestones</h3>" + path +
+      "<h2>Things to do together</h2>" + gal(S.scenes.slice(6)) + together +
+      "<h2>Talking with her</h2>" + qlist(H.conversation) +
+      "<h2>Gestures</h2>" + '<div class="two"><div>' + qlist(H.gestures) + "</div><div>" + S.ui.map(function (k) { return shot(k); }).join("") + "</div></div>" +
+      "<h2>Asking for her help</h2>" + qlist(H.helper) +
+      "<h2>Her room</h2>" + gal(S.room) + hlist(H.room) +
+      "<h2>Trivia</h2>" + qlist(H.trivia) + "</div>";
+  };
+
+  R.start = function () {
+    var steps = D.game.first_steps;
+    var art = { 1: "creator", 2: "op_part", 4: "b_shrine_hill", 6: "craft_day" };
+    return '<div class="panel">' + head("start", "はじめに", "Everything you need for your first day in Gensokyo, from the title screen to your first conversation at the shrine.") +
+      shot("op_land", "Gensokyo, as you first see it in the opening.") +
+      "<h2>Your first day</h2><ol class=\"steps\">" + steps.map(function (s, i) {
+        var title = s.title.replace(/^\d+\.\s*/, "");
+        return "<li><div><b>" + esc(title) + "</b><p>" + kbdify(s.text) + "</p>" + (art[i] ? shot(art[i]) : "") + "</div></li>";
+      }).join("") + "</ol>" +
+      '<div class="note warn"><b>One life</b>Death is permanent in Heartbound. If your Life reaches zero, the save ends and becomes a memorial. Stay near the shrine at first, and back off when the Life plate pulses red.</div>' +
+      "<h2>Survival tips</h2>" + list(D.game.tips) +
+      "<h2>Reading the screen</h2>" + list(D.game.hud) + "</div>";
+  };
+
+  R.controls = function () {
+    var groups = { "On foot": [], "World & building": [], "Menus": [], "Combat": [], "World map": [], "Other": [] };
+    D.game.controls.forEach(function (c) {
+      var a = c.action.toLowerCase();
+      var g = a.indexOf("world map") === 0 ? "World map" :
+        /attack|guard|roll|lock|launcher|low blow|rush|blows|combat/.test(a) ? "Combat" :
+        /walk|sprint|jump|drop|swim/.test(a) ? "On foot" :
+        /mine|place|hotbar|layer|go in|queue|speed/.test(a) ? "World & building" :
+        /emote|inventory|calendar|craft|book|skills|pause|interaction/.test(a) ? "Menus" : "Other";
+      groups[g].push(c);
+    });
+    var html = "";
+    Object.keys(groups).forEach(function (g) {
+      if (!groups[g].length) return;
+      html += "<h2>" + g + '</h2><div class="tbl"><table><thead><tr><th>Action</th><th>Keyboard & mouse</th></tr></thead><tbody>' +
+        groups[g].map(function (c) { return "<tr><td>" + esc(c.action.replace(/^World map: /, "")) + "</td><td>" + keys(c.keys) + "</td></tr>"; }).join("") + "</tbody></table></div>";
+    });
+    return '<div class="panel">' + head("controls", "操作", "Every key and button, as bound in the game. Heartbound plays with keyboard and mouse on PC and with touch controls on phones.") + html +
+      "<h2>Touch controls</h2>" + '<div class="two"><div>' + list(D.game.mobile.slice(0, 5)) + "</div><div>" + shot("touch") + "</div></div>" + list(D.game.mobile.slice(5)) +
+      "<h2>Settings and languages</h2>" + list(D.game.settings) + "</div>";
+  };
+
+  R.gensokyo = function () {
+    var places = D.world.places;
+    return '<div class="panel">' + head("gensokyo", "幻想郷", "A land sealed away from the outside world by the Great Barrier, where humans, youkai and gods live side by side. You see it from above on the world map, then step into each place as a side-view world of blocks.") +
+      shot("op_land", "The first view of Gensokyo from the opening.") +
+      '<h2>The world map</h2><div class="two">' + shot("map_spring") + shot("map_autumn") + "</div>" +
+      "<p>Walk from tile to tile with <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>; every step costs time on the clock. Named places are hand-made. Common tiles open a field generated for your save, and every field you visit is kept exactly as you left it. Leave the shrine by the trail at the foot of its stairway, where a sign reads <em>Take the road</em>.</p>" +
+      shot("landmarks") +
+      '<h2>Places</h2><div class="tbl"><table><thead><tr><th>Place</th><th class="num">Tier</th><th>People</th><th>About</th></tr></thead><tbody>' +
+      places.map(function (p) { return "<tr><td><b>" + esc(p.name) + "</b>" + (p.planned ? ' <span class="tag soft">coming</span>' : "") + '</td><td class="num">' + esc(p.tier) + "</td><td>" + esc(p.people || "—") + "</td><td>" + esc(p.description) + "</td></tr>"; }).join("") + "</tbody></table></div>" +
+      '<h2>The tier ladder</h2><p>One ladder runs through everything: regions, materials, tools, weapons, enemies and workbenches. By design, each tier has three keys: a strong enough tool, protection from the place\'s danger, and the trust of its people. For now, only favor can keep you out of a named place.</p><div class="tbl"><table><thead><tr><th class="num">Tier</th><th>Name</th><th>Region</th><th>Materials</th></tr></thead><tbody>' +
+      D.world.tiers.map(function (t) { return '<tr><td class="num">' + t.tier + "</td><td><b>" + esc(t.name) + "</b></td><td>" + esc(t.region) + "</td><td>" + esc(t.materials) + "</td></tr>"; }).join("") + "</tbody></table></div>" +
+      "<h2>Peoples and favor</h2>" + list(D.world.peoples) + "</div>";
+  };
+
+  R.biomes = function () {
+    var fam = {}; D.world.biomes.forEach(function (b) { fam[cap(b.family)] = 1; });
+    var fams = ["All"].concat(Object.keys(fam));
+    var counts = countBy(D.world.biomes, function (b) { return cap(b.family); });
+    var shown = D.world.biomes.filter(function (b) { return state.biomes === "All" || cap(b.family) === state.biomes; });
+    return '<div class="panel">' + head("biomes", "風景", "Every field of Gensokyo belongs to a biome with its own ground, trees, plants and creatures, and each one changes with the four seasons, the hour and the weather.") +
+      chips("biomes", fams, counts) +
+      '<div class="toggle" role="group" aria-label="Time of day"><button data-alt="0" aria-pressed="' + !state.biomeAlt + '">Day</button><button data-alt="1" aria-pressed="' + state.biomeAlt + '">Night & winter</button></div>' +
+      '<div class="gallery">' + shown.map(function (b) {
+        var key = "b_" + b.id + (state.biomeAlt && D.shots["b_" + b.id + "_alt"] ? "_alt" : "");
+        var S = D.shots[key];
+        return '<figure class="shot"><div class="pic"><img src="' + S.src + '" width="' + S.w + '" height="' + S.h + '" alt="' + esc(b.name) + '" loading="lazy"></div><figcaption><b style="color:var(--ink);font-family:var(--font-display);font-weight:400;font-size:1rem">' + esc(b.name) + '</b> <span class="tag gold">' + esc(cap(b.family)) + "</span><br>" + esc(b.description) + "</figcaption></figure>";
+      }).join("") + "</div></div>";
+  };
+
+  R.seasons = function () {
+    return '<div class="panel">' + head("seasons", "四季", "The year turns through four seasons of 30 days. The sky follows the clock, weather comes and goes, and the whole world changes colour.") +
+      shot("season_card") +
+      '<div class="two"><figure class="shot"><div class="pic"><img src="' + D.shots.card_spring.src + '" width="400" height="112" alt="The spring season card"></div><figcaption>The spring card.</figcaption></figure><figure class="shot"><div class="pic"><img src="' + D.shots.card_autumn.src + '" width="400" height="112" alt="The autumn season card"></div><figcaption>The autumn card.</figcaption></figure></div>' +
+      "<h2>Calendar, sky and weather</h2>" + list(D.world.seasons) +
+      "<h2>One view, every hour</h2><p>The sky follows the clock from dawn to the small hours, and rain greys it over.</p><div class=\"gallery\">" + [0, 1, 2, 3, 4, 5].map(function (i) { return shot("sky_h" + i); }).join("") + "</div>" +
+      "<h2>One view, every season</h2><div class=\"gallery\">" + [0, 1, 2, 3].map(function (i) { return shot("sky_s" + i); }).join("") + "</div></div>";
+  };
+
+  R.characters = function () {
+    return '<div class="panel">' + head("characters", "登場人物", "Every character is built piece by piece: head, hair, body, arms and legs. Clothes really sit on the body, and each person has their own way of walking and standing.") +
+      '<div class="stage">' + D.cast.map(function (c) { return "<figure>" + spr("cast", c.s, 150, 4) + "<figcaption>" + esc(c.role) + "</figcaption></figure>"; }).join("") + "</div>" +
+      "<h2>The cast</h2><div class=\"cards\">" + D.cast.map(function (c) {
+        return '<div class="card"><div class="head"><span class="sprbox">' + spr("cast", c.s, 78, 2) + "</span><div><b>" + esc(c.role) + '</b><div class="tags"><span class="tag soft">Rest pose: ' + esc(c.rest_pose) + "</span></div></div></div><p>" + esc(c.personality) + "</p></div>";
+      }).join("") + "</div>" +
+      '<h2>Creating your character</h2><div class="two"><div>' + list(D.creation.slice(0, Math.ceil(D.creation.length / 2))) + "</div><div>" + shot("creator") + list(D.creation.slice(Math.ceil(D.creation.length / 2))) + "</div></div></div>";
+  };
+
+  R["daily-life"] = function () {
+    return '<div class="panel">' + head("daily-life", "暮らし", "Heartbound is a life sim first. The Shrine Maiden keeps her own routine, remembers what you do, and lets you into her day as your bond grows.") +
+      '<div class="gallery">' + D.life.slice(0, 6).map(function (k) { return shot(k); }).join("") + "</div>" +
+      "<h2>Life at the shrine</h2>" + list(D.life_facts) +
+      "<h2>Talking and bonds</h2>" + list(D.relationships) +
+      '<div class="gallery">' + D.life.slice(6).map(function (k) { return shot(k); }).join("") + "</div>" +
+      "<h2>Asking for help</h2>" + list(D.helpers) + "</div>";
+  };
+
+  R.races = function () {
+    var fams = ["All"]; D.races.forEach(function (r) { if (fams.indexOf(r.family) < 0) fams.push(r.family); });
+    var counts = countBy(D.races, function (r) { return r.family; });
+    var shown = D.races.filter(function (r) { return state.races === "All" || r.family === state.races; });
+    function pips(g) { if (!g) return '<span class="tag soft">Human line</span>'; var s = ""; for (var i = 1; i <= 5; i++) s += i <= g ? "◆" : "◇"; return '<span class="grade" title="Grade ' + g + ' of 5">' + s + "</span>"; }
+    return '<div class="panel">' + head("races", "種族", "You arrive human, but Gensokyo offers other paths. " + D.races.length + " races in eight families, unequal by design, each with its own route, rite, powers and price.") +
+      '<div class="two"><div>' + list(D.race_rules) + "</div><div>" + shot("racebook") + "</div></div>" +
+      "<h2>The rite</h2><div class=\"gallery\">" + ["rite1", "rite3", "rite7"].map(function (k) { return shot(k); }).join("") + "</div>" +
+      "<h2>All races</h2>" + chips("races", fams, counts) +
+      '<div class="cards">' + shown.map(function (r) {
+        return '<div class="card" id="r-' + esc(r.id) + '"><div class="head"><span class="sprbox">' + spr("races", r.s, 72, 3) + "</span><div><b>" + esc(r.name) + "</b>" + pips(r.grade) + '<div class="tags"><span class="tag gold">' + esc(r.family) + "</span>" + (r.route === "death" ? '<span class="tag red">Route of death</span>' : r.route === "none" ? '<span class="tag soft">Starting race</span>' : '<span class="tag green">Route of the living</span>') + "</div></div></div>" +
+          "<p><i>" + esc(r.blurb) + "</i></p>" +
+          '<div class="forms">' + (r.forms || []).map(function (f, i) { return (i ? "<i>▸</i>" : "") + "<span>" + esc(f) + "</span>"; }).join("") + "</div>" +
+          '<div class="meta"><b>Energy:</b> ' + esc(r.energy) + "<br><b>Feeds on:</b> " + esc(r.upkeep) + (r.traits && r.traits.length ? "<br><b>Traits:</b> " + esc(r.traits.join(" · ")) : "") + "</div></div>";
+      }).join("") + "</div></div>";
+  };
+
+  R.bestiary = function () {
+    var cats = ["All"]; D.creatures.forEach(function (c) { var k = cap(c.category); if (cats.indexOf(k) < 0) cats.push(k); });
+    var counts = countBy(D.creatures, function (c) { return cap(c.category); });
+    return '<div class="panel">' + head("bestiary", "図鑑", D.creatures.length + " creatures live in Gensokyo, from fireflies and koi to fairies, tsukumogami and wandering spirits. Most are peaceful and simply live their lives around you.") +
+      chips("bestiary", cats, counts) +
+      '<input class="find" id="beastFind" type="search" placeholder="Find by name or place…" value="' + esc(state.beastFind) + '" aria-label="Find a creature">' +
+      '<div id="list">' + LISTS.beastFind() + "</div>" +
+      '<div class="note"><b>On the road</b>The Boar youkai, the Crow youkai and the wild Fairies that ambush travellers are separate from the peaceful boars, crows and fairies here. See <a href="#combat">Combat</a>.</div></div>';
+  };
+  var LISTS = {
+    beastFind: function () {
+      var f = state.beastFind.toLowerCase();
+      var shown = D.creatures.filter(function (c) { return (state.bestiary === "All" || cap(c.category) === state.bestiary) && (!f || (c.name + " " + c.habitat + " " + c.description).toLowerCase().indexOf(f) >= 0); });
+      return '<p class="count">' + shown.length + " shown</p>" + '<div class="cards">' + shown.map(function (c) {
+        return '<div class="card" id="c-' + esc(c.id) + '"><div class="head"><span class="sprbox">' + spr("creatures", c.s, 76, 8) + "</span><div><b>" + esc(c.name) + '</b><div class="tags"><span class="tag gold">' + esc(cap(c.category)) + "</span>" + (c.hostile ? '<span class="tag fill">Hostile</span>' : '<span class="tag green">Peaceful</span>') + "</div></div></div><p>" + esc(c.description) + '</p><div class="meta">' + esc(c.habitat) + "</div></div>";
+      }).join("") + "</div>";
+    },
+    itemFind: function () {
+      var f = state.itemFind.toLowerCase();
+      var shown = D.items.filter(function (i) { return (state.items === "All" || (KIND[i.kind] || cap(i.kind)) === state.items) && (!f || (i.name + " " + i.description).toLowerCase().indexOf(f) >= 0); });
+      return '<p class="count">' + shown.length + " shown</p>" + '<div class="itemgrid">' + shown.map(function (i) {
+        return '<button data-item="' + esc(i.id) + '" aria-pressed="' + (state.itemSel === i.id) + '" title="' + esc(i.name) + '" aria-label="' + esc(i.name) + '">' + spr("items", i.s, 48, 3) + "</button>";
+      }).join("") + "</div>";
+    },
+    recipeFind: function () {
+      var names = {}; D.stations.forEach(function (s) { names[s.id] = s.name; });
+      var f = state.recipeFind.toLowerCase();
+      var shown = D.recipes.filter(function (r) { return (state.recipes === "All" || (names[r.station] || r.station) === state.recipes) && (!f || (r.output + " " + r.inputs).toLowerCase().indexOf(f) >= 0); });
+      return '<p class="count">' + shown.length + " shown</p>" +
+        '<div class="tbl" style="max-height:560px"><table><thead><tr><th>Makes</th><th>From</th><th>Bench</th><th class="num">Time</th></tr></thead><tbody>' +
+        shown.map(function (r) { return "<tr><td><b>" + esc(r.output) + "</b>" + (r.count > 1 ? " ×" + r.count : "") + "</td><td>" + esc(r.inputs) + "</td><td>" + esc(names[r.station] || r.station) + '</td><td class="num">' + (r.minutes ? esc(r.minutes) + " min" : "—") + "</td></tr>"; }).join("") + "</tbody></table></div>";
+    }
+  };
+
+  var KIND = { block: "Blocks", tool: "Tools", weapon: "Weapons", material: "Materials", furniture: "Furniture", seed: "Seeds", food: "Food", station: "Workbenches", accessory: "Accessories", consumable: "Consumables", key: "Key items" };
+  R.items = function () {
+    var kinds = ["All"]; D.items.forEach(function (i) { var k = KIND[i.kind] || cap(i.kind); if (kinds.indexOf(k) < 0) kinds.push(k); });
+    var counts = countBy(D.items, function (i) { return KIND[i.kind] || cap(i.kind); });
+    var sel = find(D.items, state.itemSel) || D.items[0];
+    state.itemSel = sel.id;
+    return '<div class="panel">' + head("items", "道具", D.items.length + " items: blocks, tools, weapons in four metals, materials, seeds, food and furniture. Pick one to read about it.") +
+      '<div class="itemcard" id="itemcard" aria-live="polite">' + itemCard(sel) + "</div>" +
+      chips("items", kinds, counts) +
+      '<input class="find" id="itemFind" type="search" placeholder="Find an item…" value="' + esc(state.itemFind) + '" aria-label="Find an item">' +
+      '<div id="list">' + LISTS.itemFind() + "</div></div>";
+  };
+  function itemCard(i) {
+    if (!i) return "";
+    return '<span class="sprbox">' + spr("items", i.s, 90, 5) + "</span><div><b>" + esc(i.name) + '</b><span class="tag">' + esc(KIND[i.kind] || cap(i.kind)) + "</span> " + (i.tier >= 0 ? '<span class="tag">Tier ' + esc(i.tier) + "</span>" : "") + "<p>" + esc(i.description) + "</p></div>";
+  }
+
+  R.crafting = function () {
+    var st = D.stations;
+    var names = {}; st.forEach(function (s) { names[s.id] = s.name; });
+    var stOpts = ["All"]; D.recipes.forEach(function (r) { var n = names[r.station] || r.station; if (stOpts.indexOf(n) < 0) stOpts.push(n); });
+    var counts = countBy(D.recipes, function (r) { return names[r.station] || r.station; });
+    return '<div class="panel">' + head("crafting", "工房", "Almost everything is made at a workbench. Start with your bare hands, build a Carpenter's Table, and work your way up to the Anvil.") +
+      shot("craft_day") +
+      "<h2>How crafting works</h2>" + list(D.craft_how) +
+      '<h2>Workbenches</h2><div class="cards">' + st.map(function (s) {
+        return '<div class="card"><div class="head"><span class="sprbox">' + (s.s ? spr("stations", s.s, 76, 3) : '<span class="tag soft">' + (s.id === "hand" ? "Hands" : "Soon") + "</span>") + "</span><div><b>" + esc(s.name) + '</b><div class="tags"><span class="tag gold">Tier ' + esc(s.tier) + "</span>" + (s.planned ? '<span class="tag soft">coming</span>' : '<span class="tag green">' + s.recipe_count + " recipes</span>") + "</div></div></div><p>" + esc(s.purpose) + "</p></div>";
+      }).join("") + "</div>" +
+      '<div class="gallery" style="margin-top:16px">' + shot("craft_night") + shot("craft_ready") + shot("craft_rain") + "</div>" +
+      "<h2>Recipes</h2>" + chips("recipes", stOpts, counts) +
+      '<input class="find" id="recipeFind" type="search" placeholder="Find a recipe or ingredient…" value="' + esc(state.recipeFind) + '" aria-label="Find a recipe">' +
+      '<div id="list">' + LISTS.recipeFind() + "</div>" +
+      (D.farming && D.farming.length ? "<h2>Farming and food</h2>" + list(D.farming) : "") + "</div>";
+  };
+
+  R.mining = function () {
+    return '<div class="panel">' + head("mining", "採掘と建築", "The world is a side view of 16-pixel blocks in two layers. Dig it, fell its trees and build it back the way you want. Your changes stay in your save.") +
+      shot("b_satoyama_wood", "Countryside woods: soil, stone and trees to work with.") + "<h2>The rules</h2>" + list(D.game.mining) +
+      '<h2>Blocks</h2><div class="tbl"><table><thead><tr><th>Block</th><th>Layer</th><th class="num">Seconds</th><th>Pickaxe needed</th><th>Notes</th></tr></thead><tbody>' +
+      mergedBlocks().map(function (b) {
+        var it = null; D.items.forEach(function (i) { if (!it && i.name === b.name) it = i; });
+        return "<tr><td>" + (it ? spr("items", it.s, 24, 2) + " " : "") + "<b>" + esc(b.name) + "</b></td><td>" + esc(b.layer) + '</td><td class="num">' + esc(b.seconds) + "</td><td>" + esc(b.tool) + "</td><td>" + esc(b.note) + "</td></tr>";
+      }).join("") + "</tbody></table></div></div>";
+  };
+  function mergedBlocks() {
+    var LAYER = { FG: "Foreground", BG: "Background" };
+    var PICK = ["Any", "Copper", "Iron", "Master"];
+    var rows = [], by = {};
+    D.blocks.forEach(function (b) {
+      var r = by[b.name];
+      if (!r) { r = by[b.name] = { name: b.name, layers: [], secs: [], tool: null, notes: [] }; rows.push(r); }
+      var L = LAYER[b.layer] || b.layer; if (L && r.layers.indexOf(L) < 0) r.layers.push(L);
+      if (b.seconds != null && r.secs.indexOf(b.seconds) < 0) r.secs.push(b.seconds);
+      if (b.min_tool_tier != null) r.tool = Math.max(r.tool == null ? 0 : r.tool, b.min_tool_tier);
+      if (b.note && r.notes.indexOf(b.note) < 0) r.notes.push(b.note);
+    });
+    return rows.map(function (r) {
+      var s = r.secs.slice().sort(function (a, b) { return a - b; });
+      return { name: r.name, layer: r.layers.join(" / ") || "—", seconds: s.length ? (s.length > 1 ? s[0] + "–" + s[s.length - 1] : String(s[0])) : "—",
+        tool: r.tool == null ? "—" : (PICK[r.tool] || "Tier " + r.tool), note: r.notes.join(" ") };
+    });
+  };
+
+  R.skills = function () {
+    var groups = {}; D.game.skills.forEach(function (s) { (groups[s.group] = groups[s.group] || []).push(s); });
+    return '<div class="panel">' + head("skills", "技能", "There is no character level. Twelve skills grow by doing what they train, from level 1 to 50, and together they make your Renown.") +
+      '<div class="two"><div>' + Object.keys(groups).map(function (g) {
+        return "<h3>" + esc(g) + "</h3><ul>" + groups[g].map(function (s) { return "<li><b>" + esc(s.name) + "</b>" + (s.planned ? ' <span class="tag soft">coming</span>' : "") + " — " + esc(s.trained_by) + "</li>"; }).join("") + "</ul>";
+      }).join("") + "</div><div>" + shot("skills") + "</div></div>" +
+      "<h2>How skills grow</h2>" + list(D.game.skill_rules) + "</div>";
+  };
+
+  R.combat = function () {
+    return '<div class="panel">' + head("combat", "戦闘", "Fights are fast and heavy: enemies reel, fly and fall, big blows freeze the screen for a beat, and every attack is announced before it lands.") +
+      '<div class="two">' + shot("combat_chain") + shot("combat_rush") + "</div>" +
+      "<h2>How to fight</h2>" + list(D.game.combat) +
+      '<h2>Arsenal</h2><p>Tools and the first weapons. Copper weapons come from the Carpenter\'s Table; iron, gold and diamond ones from the Anvil. See <a href="#items">Items</a> for all of them.</p><div class="cards">' +
+      D.weapons.map(function (w) { return '<div class="card"><div class="head"><span class="sprbox">' + spr("weapons", w.s, 72, 4) + "</span><div><b>" + esc(w.name) + '</b><div class="tags"><span class="tag gold">' + esc(w.family) + "</span></div></div></div></div>"; }).join("") + "</div></div>";
+  };
+
+  R.about = function () {
+    return '<div class="panel">' + head("about", "について", "A fan-made game, made with love for Gensokyo.") +
+      shot("op_wood", "Somewhere in the outside world, a forgotten shrine.") +
+      "<h2>At a glance</h2><div class=\"tbl\"><table><tbody>" +
+      [["Title", "Touhou: Heartbound"], ["Genre", "2D block-building life sim and romance"], ["Setting", "Gensokyo, from Touhou Project"], ["Look", "Pixel art at 640 × 360, traditional Japanese style"], ["Platforms", "Windows, macOS, Linux and Android"], ["Languages", "English, Brazilian Portuguese, Simplified Chinese"], ["Players", "Single player"], ["Saves", "One slot per life, with permadeath"], ["Rating", "18+"], ["Status", "In development"]]
+        .map(function (r) { return "<tr><th style=\"width:30%\">" + r[0] + "</th><td>" + r[1] + "</td></tr>"; }).join("") + "</tbody></table></div>" +
+      "<h2>The story so far</h2><div class=\"gallery\">" + shot("op_city") + shot("op_wood") + shot("op_fall") + shot("op_part") + "</div>" +
+      "<p>You come from the outside world. One rainy night a stone path leads to a forgotten shrine, and from there you fall through the clouds into Gensokyo. You wake at the foot of the Hakurei Shrine's stairway with a pickaxe and an axe, and the rest is up to you.</p>" +
+      '<h2>Credits</h2><p><b>Touhou: Heartbound</b> is a fan-made game based on <i>Touhou Project</i>. Touhou Project and its world are the work of Team Shanghai Alice / ZUN. All art shown on this wiki is from Touhou: Heartbound.</p></div>';
+  };
+
+  R.search = function () {
+    var q = state.search.trim().toLowerCase();
+    var out = [];
+    if (q) {
+      D.creatures.forEach(function (c) { if (c.name.toLowerCase().indexOf(q) >= 0) out.push(["bestiary", "creatures", c, "Creature · " + cap(c.category)]); });
+      D.races.forEach(function (r) { if (r.name.toLowerCase().indexOf(q) >= 0) out.push(["races", "races", r, "Race · " + r.family]); });
+      D.items.forEach(function (i) { if (i.name.toLowerCase().indexOf(q) >= 0) out.push(["items", "items", i, "Item · " + (KIND[i.kind] || cap(i.kind))]); });
+      D.world.biomes.forEach(function (b) { if (b.name.toLowerCase().indexOf(q) >= 0) out.push(["biomes", null, b, "Biome · " + cap(b.family)]); });
+      D.world.places.forEach(function (p) { if (p.name.toLowerCase().indexOf(q) >= 0) out.push(["gensokyo", null, p, "Place · Tier " + p.tier]); });
+    }
+    return '<div class="panel"><div class="crumbs">Heartbound Wiki › Search</div><h1>Search</h1><p class="lede">' + (q ? out.length + " results for “" + esc(state.search) + "”" : "Type in the search box to find creatures, races, items, biomes and places.") + '</p><div class="results">' +
+      out.slice(0, 80).map(function (r) {
+        return '<a href="#' + r[0] + '" data-pick="' + esc(r[2].id || "") + '" data-page="' + r[0] + '"><span class="sprbox">' + (r[1] ? spr(r[1], r[2].s, 46, 3) : "") + "</span><span><b>" + esc(r[2].name) + "</b><br><small>" + esc(r[3]) + "</small></span></a>";
+      }).join("") + "</div></div>";
+  };
+
+  // ---------- router ----------
+  var current = "home";
+  function route() {
+    var h = (location.hash || "").replace(/^#/, "");
+    if (!Object.prototype.hasOwnProperty.call(TITLES, h)) h = "home";
+    current = h;
+    render(true);
+  }
+  function render(scrollTop) {
+    renderNav(current === "search" ? "" : current);
+    main.innerHTML = R[current]() + '<div class="foot"><p>Touhou: Heartbound is a fan-made game based on Touhou Project by Team Shanghai Alice / ZUN.</p><p>All pictures on this wiki are from the game.</p></div>';
+    document.title = (current === "home" ? "" : ((TITLES[current] || ["Search"])[0] + " · ")) + "Touhou: Heartbound Wiki";
+    if (scrollTop) window.scrollTo(0, 0);
+    closeMenu();
+  }
+
+  // ---------- events ----------
+  main.addEventListener("click", function (e) {
+    var c = e.target.closest("[data-chip]");
+    if (c) { state[c.getAttribute("data-chip")] = c.getAttribute("data-v"); keepScroll(); return; }
+    var a = e.target.closest("[data-alt]");
+    if (a) { state.biomeAlt = a.getAttribute("data-alt") === "1"; keepScroll(); return; }
+    var it = e.target.closest("[data-item]");
+    if (it) {
+      state.itemSel = it.getAttribute("data-item");
+      document.getElementById("itemcard").innerHTML = itemCard(find(D.items, state.itemSel));
+      main.querySelectorAll("[data-item]").forEach(function (b) { b.setAttribute("aria-pressed", b === it); });
+      return;
+    }
+  });
+  function keepScroll() { var y = window.scrollY; render(false); window.scrollTo(0, y); }
+  var timers = {};
+  function updateList(k) {
+    var box = document.getElementById("list");
+    if (box && LISTS[k]) box.innerHTML = LISTS[k]();
+  }
+  main.addEventListener("input", function (e) {
+    var k = e.target.id;
+    if (!LISTS[k]) return;
+    state[k] = e.target.value;
+    if (e.isComposing) return;
+    clearTimeout(timers[k]);
+    timers[k] = setTimeout(function () { updateList(k); }, 140);
+  });
+  main.addEventListener("compositionend", function (e) { if (LISTS[e.target.id]) { state[e.target.id] = e.target.value; updateList(e.target.id); } });
+
+  // any in-page link: also handles links to the page already shown and search results
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var target = a.getAttribute("href").slice(1);
+    var pick = a.getAttribute("data-pick");
+    if (pick) {
+      if (target === "items") { state.items = "All"; state.itemFind = ""; state.itemSel = pick; }
+      if (target === "bestiary") { state.bestiary = "All"; state.beastFind = ""; }
+      if (target === "races") { state.races = "All"; }
+      if (target === "biomes") { state.biomes = "All"; }
+    }
+    q.value = ""; state.search = "";
+    if ("#" + target === location.hash || (!location.hash && target === "home")) { e.preventDefault(); route(); }
+    if (pick) {
+      setTimeout(function () {
+        var el = document.getElementById((target === "bestiary" ? "c-" : target === "races" ? "r-" : "x-") + pick);
+        if (el) { el.scrollIntoView({ block: "center" }); el.style.outline = "3px solid var(--red)"; }
+      }, 30);
+    }
+  });
+  var q = document.getElementById("q");
+  q.addEventListener("input", function () {
+    state.search = q.value;
+    clearTimeout(timers.q);
+    timers.q = setTimeout(function () {
+      if (!D) return;
+      if (state.search.trim()) { current = "search"; render(false); } else if (current === "search") { route(); }
+    }, 180);
+  });
+  var menuBtn = document.getElementById("menuBtn"), scrim = null;
+  function closeMenu() {
+    var was = side.classList.contains("open");
+    side.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false");
+    if (scrim) { scrim.remove(); scrim = null; }
+    return was;
+  }
+  menuBtn.addEventListener("click", function () {
+    if (closeMenu()) return;
+    side.classList.add("open"); menuBtn.setAttribute("aria-expanded", "true");
+    scrim = document.createElement("div"); scrim.className = "scrim"; scrim.addEventListener("click", closeMenu); document.body.appendChild(scrim);
+    var first = side.querySelector("a"); if (first) setTimeout(function () { first.focus(); }, 60);
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && closeMenu()) menuBtn.focus(); });
+  window.addEventListener("hashchange", function () { q.value = ""; state.search = ""; route(); });
+
+  fetch("data.json").then(function (r) { return r.json(); }).then(function (d) {
+    D = d;
+    if (state.search.trim()) { current = "search"; render(true); } else route();
+  })
+    .catch(function () { main.innerHTML = '<div class="panel"><h1>The scrolls would not open</h1><p>The wiki data did not load. Reload the page to try again.</p></div>'; });
+})();
+</script>
+
+</body>
+</html>
