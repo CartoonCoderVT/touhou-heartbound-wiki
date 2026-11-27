@@ -831,5 +831,17 @@ li.planned { color: var(--ink-soft); }
 })();
 </script>
 
+<!-- GoatCounter: conta as visitas da wiki (painel em https://touhou-heartbound.goatcounter.com) -->
+<script>
+  // Conta cada seção da wiki (#home etc.) como uma página separada
+  window.goatcounter = { path: function () { return location.pathname + location.search + location.hash; } };
+  window.addEventListener("hashchange", function () {
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: location.pathname + location.search + location.hash });
+    }
+  });
+</script>
+<script data-goatcounter="https://touhou-heartbound.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
 </body>
 </html>
